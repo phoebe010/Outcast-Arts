@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour{
     private bool isClimbing;
 
     private Rigidbody2D rb;
+    Rigidbody2D myRigidBody;
 
     private bool facingRight = true;
 
@@ -91,4 +92,6 @@ public class PlayerController : MonoBehaviour{
         Scaler.x *= -1;
         transform.localScale = Scaler;
     }
+   
+   
 }
