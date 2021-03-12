@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour{
 
     private Rigidbody2D rb;
     Rigidbody2D myRigidBody;
+    Animator myAnimator;
 
     private bool facingRight = true;
 
@@ -30,6 +31,8 @@ public class PlayerController : MonoBehaviour{
 
     void Start(){
         extraJumps = extraJumpsValue;
+        myRigidBody = GetComponent<Rigidbody2D>();
+        myAnimator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -40,6 +43,11 @@ public class PlayerController : MonoBehaviour{
 
         //moves player left and right with arrow keys (add "Raw" after "GetAxis" to make movement more snappy)
         moveInput = Input.GetAxisRaw("Horizontal");
+
+        bool playerHasHorizontalSpeed = Mathf.Abs(myRigidBody.velocity.x) > Mathf.Epsilon;
+        myAnimator.SetBool("Walking", playerHasHorizontalSpeed);
+
+
         Debug.Log(moveInput);
         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
 
@@ -86,7 +94,7 @@ public class PlayerController : MonoBehaviour{
     }
 
     void Flip(){
-
+        bool playerHasHorizontalSpeed = Mathf.Abs(myRigidBody.velocity.x) > Mathf.Epsilon;
         facingRight = !facingRight;
         Vector3 Scaler = transform.localScale;
         Scaler.x *= -1;
