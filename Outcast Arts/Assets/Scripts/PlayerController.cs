@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour{
         myAnimator.SetBool("Walking", playerHasHorizontalSpeed);
 
 
-        Debug.Log(moveInput);
         rb.velocity = new Vector2(moveInput * speed, rb.velocity.y);
 
         //flips character based on which way they are moving
@@ -61,15 +60,17 @@ public class PlayerController : MonoBehaviour{
         //checks to see if player is in contact with ladder
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, Vector2.up, distance, whatIsLadder);
 
-        if(hitInfo.collider != null){
-            if (Input.GetKeyDown(KeyCode.UpArrow)){
+        if (hitInfo.collider != null){
+            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+            {
                 isClimbing = true;
             }
         } else{
             isClimbing = false;
         }
 
-        if(isClimbing == true){
+
+        if (isClimbing == true){
             inputVertical = Input.GetAxisRaw("Vertical");
             rb.velocity = new Vector2(rb.velocity.x, inputVertical * speed);
             rb.gravityScale = 0;
